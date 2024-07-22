@@ -31,3 +31,19 @@ def scrape_table(url):
         response.raise_for_status()
 
 
+def scrape_images(url):
+    soup = scrape(url)
+    images = [{'alt': img.get('alt', ''), 'src': img.get('src', '')} for img in soup.find_all('img')]
+    return images
+
+
+def extract_links(url):
+    soup = scrape(url)
+    links = [{'text': a.text, 'href': a.get('href', '')} for a in soup.find_all('a')]
+    return links
+
+
+def extract_metadata(url):
+    soup = scrape(url)
+    metadata = {meta.get('name', ''): meta.get('content', '') for meta in soup.find_all('meta')}
+    return metadata
